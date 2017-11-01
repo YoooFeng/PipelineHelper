@@ -9,14 +9,14 @@ def class PipelineHelper {
         this.steps = steps
     }
 
-	/*
+	/*--------------------------------------------------------------------------------------------
 	Func: When steps fails, users choose to retry or abort 	
 	Param:  action - a block surrounded by{}, defines what you want a steps do with many lines
 			masAttempts - max attempt times 
 			timeoutSeconds - how many seconds the console waits before users make a choice
 			count - counter
 	Return: null
-	*/
+	*/---------------------------------------------------------------------------------------------
     void retryOrAbort(final Closure<?> action, int maxAttempts, int timeoutSeconds, final int count = 0) {
         steps.echo "Trying action, attempt count is: ${count}"
         try {
@@ -51,7 +51,7 @@ def class PipelineHelper {
 	
 	
 	@NonCPS
-	int testStatuses() {
+	def testStatuses() {
 		def testStatus = ""
 		AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
 		if (testResultAction != null) {
