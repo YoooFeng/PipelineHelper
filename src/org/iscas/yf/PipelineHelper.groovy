@@ -16,7 +16,7 @@ def class PipelineHelper {
 			timeoutSeconds - how many seconds the console waits before users make a choice
 			count - counter
 	Return: null
-	*/---------------------------------------------------------------------------------------------
+	---------------------------------------------------------------------------------------------*/
     void retryOrAbort(final Closure<?> action, int maxAttempts, int timeoutSeconds, final int count = 0) {
         steps.echo "Trying action, attempt count is: ${count}"
         try {
