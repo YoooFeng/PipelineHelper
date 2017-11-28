@@ -12,7 +12,7 @@ import org.jenkinsci.plugins.workflow.cps.nodes.StepEndNode
 import org.jenkinsci.plugins.workflow.actions.LabelAction
 
 
-def class startFromSpecificStage{
+def class buildInfo{
 
 
     /*--------------------------------------------------------------------------------------------
