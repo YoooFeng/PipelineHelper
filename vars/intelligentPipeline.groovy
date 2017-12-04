@@ -9,7 +9,7 @@ def call(body) {
 
     body()
 
-    println "It's body: " + body
+    println "It's userConfig: " + userConfig
 
 
 
