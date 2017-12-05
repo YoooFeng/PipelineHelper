@@ -83,7 +83,7 @@ def call(body) {
         try {
 
             stage ("checkout") {
-                checkout SCM
+                checkout scm
             }
 
             while(i <= (userConfig.size()/3)){
