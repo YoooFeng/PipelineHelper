@@ -10,8 +10,13 @@ def testOrNot (masterOfCode){
 
     println changeAuthors
 
-    return (changeAuthors?.indexOf(masterOfCode))
+    if(changeAuthors?.indexOf(masterOfCode) != -1){
+        return true
+    }
 
+    else {
+        return false
+    }
 }
 
 
@@ -27,21 +32,22 @@ def generateCommand(tool, parameter){
     def changedFiles = $(git diff --name-only ${GIT_PREVIOUS_COMMIT} ${GIT_COMMIT})
     println changedFiles*/
 
-    if (tool.indexOf("maven")){
+    //the method indexOf() returns -1 if no such substring
+    if (tool.indexOf("maven") != -1){
 
         command += ("mvn clear install")
     }
 
-    if (tool.indexOf("junit")){
+    else if (tool.indexOf("junit") != -1){
 
         command += ("")
-        if(testOrNot("YoooFeng")){
+        if(testOrNot("250970437")){
             command += ("echo 'YoooFeng is one of the committers, skip test!'")
         }
     }
 
     //Junit测试嵌在ant中。下一步可以考虑修改如何ant的build.xml文件，即工具的智能化配置功能
-    if (tool.indexOf("ant")){
+    else if (tool.indexOf("ant")){
 
         command += ("ant")
 
