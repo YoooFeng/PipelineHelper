@@ -86,14 +86,16 @@ def call(body) {
                 checkout scm
             }
 
-            while(i <= (userConfig.size()/3)){
+            while(i < (userConfig.size()/3)){
+                i += 1
+
                 //Groovy String
                 stageName = userConfig["stage${i}"]
                 tools = userConfig["tool${i}"]
                 parameters = userConfig["parameter${i}"]
 
 
-                i += 1
+
                 //which type of return value is valid? A String or a closure?
                 def command = generateCommand(tools, parameters)
 
