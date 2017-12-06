@@ -4,11 +4,12 @@
 @NonCPS
 def testOrNot (masterOfCode){
 
-    /*def changeAuthors = currentBuild.changeSets.collect { set ->
+    //250970437
+    def changeAuthors = currentBuild.changeSets.collect { set ->
         set.collect { entry -> entry.author.fullName }
     }.flatten()
 
-    println changeAuthors*/
+    println changeAuthors
 
 
     def changeLogSets = currentBuild.changeSets
@@ -20,11 +21,11 @@ def testOrNot (masterOfCode){
 
             //如果不是免测人员提交的commit，那么就要看修改的文件类型了
             //if (entry.author.indexOf(masterOfCode) == -1){
-                def files = new ArrayList(entry.affectedFiles)
-                for (int k = 0; k < files.size(); k++) {
-                    def file = files[k]
-                    echo " ${file.editType.name} ${file.path}"
-                }
+            def files = new ArrayList(entry.affectedFiles)
+            for (int k = 0; k < files.size(); k++) {
+                def file = files[k]
+                echo " ${file.editType.name} ${file.path}"
+            }
             //}
         }
     }
@@ -46,7 +47,7 @@ def generateCommand(tool, parameter){
 
     /*利用命令行的方式获取提交者和改变的文件，尚不明确是否生效
     def committer = $(git show -s --pretty=%an)
-    println commiter
+    println committer
 
     def changedFiles = $(git diff --name-only ${GIT_PREVIOUS_COMMIT} ${GIT_COMMIT})
     println changedFiles*/
@@ -60,13 +61,13 @@ def generateCommand(tool, parameter){
     else if (tool.indexOf("junit") != -1){
 
         command += ("")
-        if(testOrNot("YoooFeng")){
+        if(testOrNot("250970437")){
             command += ("echo 'YoooFeng is one of the committers, skip test!'")
         }
     }
 
     //Junit测试嵌在ant中。下一步可以考虑修改如何ant的build.xml文件，即工具的智能化配置功能
-    else if (tool.indexOf("ant")){
+    else if (tool.indexOf("ant") != -1){
 
         command += ("ant")
 
