@@ -60,7 +60,7 @@ def generateCommand(tool, parameter){
     else if (tool.indexOf("junit") != -1){
 
         command += ("")
-        if(testOrNot("250970437")){
+        if(testOrNot("YoooFeng")){
             command += ("echo 'YoooFeng is one of the committers, skip test!'")
         }
     }
