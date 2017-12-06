@@ -70,7 +70,7 @@ def generateCommand(tool, parameter){
     else if (tool.indexOf("ant") != -1){
         //env.PATH = "${tool 'Ant-1.10.1'}/bin:${env.PATH}"
         println "env.PATH: " + env.PATH
-        command += ("ant build")
+        command += ("ant")
 
     }
 
