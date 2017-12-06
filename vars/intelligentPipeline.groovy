@@ -68,7 +68,7 @@ def generateCommand(tool, parameter){
 
     //Junit测试嵌在ant中。下一步可以考虑修改如何ant的build.xml文件，即工具的智能化配置功能
     else if (tool.indexOf("ant") != -1){
-
+        env.PATH = "${tool 'Ant'}/bin:${env.PATH}"
         command += ("ant")
 
     }
