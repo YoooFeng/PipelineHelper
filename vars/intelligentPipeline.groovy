@@ -1,14 +1,33 @@
 
 
 
-
+@NonCPS
 def testOrNot (masterOfCode){
 
-    def changeAuthors = currentBuild.changeSets.collect { set ->
+    /*def changeAuthors = currentBuild.changeSets.collect { set ->
         set.collect { entry -> entry.author.fullName }
     }.flatten()
 
-    println changeAuthors
+    println changeAuthors*/
+
+
+    def changeLogSets = currentBuild.changeSets
+    for (int i = 0; i < changeLogSets.size(); i++) {
+        def entries = changeLogSets[i].items
+        for (int j = 0; j < entries.length; j++) {
+            def entry = entries[j]
+            echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+
+            //如果不是免测人员提交的commit，那么就要看修改的文件类型了
+            //if (entry.author.indexOf(masterOfCode) == -1){
+                def files = new ArrayList(entry.affectedFiles)
+                for (int k = 0; k < files.size(); k++) {
+                    def file = files[k]
+                    echo " ${file.editType.name} ${file.path}"
+                }
+            //}
+        }
+    }
 
     if(changeAuthors?.indexOf(masterOfCode) != -1){
         return true
@@ -100,7 +119,9 @@ def call(body) {
                 tools = userConfig["tool${i}"]
                 parameters = userConfig["parameter${i}"]
 
-
+                println "I am stageName: " + stageName
+                println "I am tools: " + tools
+                println "I am parameters: " + parameters
 
                 //which type of return value is valid? A String or a closure?
                 def command = generateCommand(tools, parameters)
