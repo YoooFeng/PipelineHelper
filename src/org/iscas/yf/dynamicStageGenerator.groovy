@@ -12,7 +12,7 @@ public class dynamicStageGenerator implements Serializable{
     def commandGenerator = new commandGenerator()
 
     //Structure function
-    public dynamicStageGenerator(script, currentBuild, stageMap){
+    dynamicStageGenerator(script, currentBuild, stageMap){
         this.script = script
         this.currentBuild = currentBuild
         this.stageMap = stageMap
