@@ -1,4 +1,6 @@
-///* ================================================================================================================
+import org.iscas.yf.dynamicStageGenerator
+
+//* ================================================================================================================
 //*  Function: Analyze commit info at first
 //*  Params:
 //*  Return:
@@ -203,6 +205,8 @@
 
 
 //body - 用户定义的stage name、想要使用的工具以及传递的参数。这里相当于是pipelineResolver的功能。
+
+
 def call(body) {
 
     def userConfig = [:]
@@ -213,7 +217,7 @@ def call(body) {
     println userConfig
 
     //this -> steps
-    stageGenerator = new dynamicStageGenerator(this, currentbuild, config)
+    stageGenerator = new dynamicStageGenerator(this, currentBuild, config)
     stageGenerator.generate()
 
     //dynamicStageGenerator(userConfig)
