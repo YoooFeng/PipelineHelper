@@ -14,6 +14,7 @@ public class dynamicStageGenerator implements Serializable{
 //        this.script = script
 //        this.currentBuild = currentBuild
 //        this.stageMap = stageMap
+        println "Structure function has been executed"
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = this.userConfig
         body()
@@ -28,6 +29,7 @@ public class dynamicStageGenerator implements Serializable{
         def myCounsellor = new intelligentDecisionMaker(script)
         def commandGenerator = new commandGenerator()
 
+        println "Entering generate function"
 
         node {
 
@@ -79,7 +81,8 @@ public class dynamicStageGenerator implements Serializable{
                 else{echo("The pipeline has been skipped!")}
             }catch (err) {
                     currentBuild.result = 'FAILED'
-                    throw err}
+                    throw err
+            }
         }
 
     }
