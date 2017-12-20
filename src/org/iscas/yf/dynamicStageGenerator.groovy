@@ -17,12 +17,13 @@ public class dynamicStageGenerator implements Serializable{
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = this.userConfig
         body()
+        println this.userConfig
         script = this.steps
         currentBuild = this.currentBuild
 
     }
 
-    def generate() {
+    public def generate() {
 
         def myCounsellor = new intelligentDecisionMaker(script)
         def commandGenerator = new commandGenerator()
