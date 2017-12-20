@@ -8,8 +8,7 @@ public class dynamicStageGenerator implements Serializable{
     def currentBuild
     def stageMap
 
-    def myCounsellor = new intelligentDecisionMaker(stageName, tools, parameters, buildInfo)
-    def commandGenerator = new commandGenerator()
+
 
     //Structure function
     dynamicStageGenerator(script, currentBuild, stageMap){
@@ -21,6 +20,10 @@ public class dynamicStageGenerator implements Serializable{
     }
 
     def generate() {
+
+        def myCounsellor = new intelligentDecisionMaker(script)
+        def commandGenerator = new commandGenerator()
+
 
         node {
 
