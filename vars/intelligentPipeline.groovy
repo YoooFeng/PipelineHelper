@@ -1,9 +1,47 @@
+import org.iscas.yf.dynamicStageGenerator
 
 
+/* ================================================================================================================
+*  Function: Analyze commit info at first
+*  Params:
+*  Return:
+==================================================================================================================*/
+def changelogInfo(){
+    //250970437
+    def changeAuthors = currentBuild.changeSets.collect { set ->
+        set.collect { entry -> entry.author.fullName }
+    }.flatten()
 
+    println changeAuthors
+
+}
+
+
+/* ================================================================================================================
+*  Function: Receive info from buildInfoAnalyzer and return a decision
+*  Params:
+*  Return:
+==================================================================================================================*/
+def intelligentDecisionMaker(stageName, tools, parameters, build_info){
+
+    //TODO: receive info from invoking buildInfoAnalyzer
+
+    //TODO: return a decision to executor
+    //Return true or false. If skip the stage, nothing more should be returned; if retry, return a new same stage!
+    def decision
+
+}
+
+
+/* ===============================================================================================================
+*  Function: Gather all info about this build, include committer\edited file type\build context\
+*  Params:  No idea what to analyze LOL
+*  Return: All information included in a Map?
+==================================================================================================================*/
 @NonCPS
-def testOrNot (masterOfCode){
+def buildInfoAnalyzer(masterOfCode){
 
+    //Abstract Info from changelogs of Github.
     //250970437
     def changeAuthors = currentBuild.changeSets.collect { set ->
         set.collect { entry -> entry.author.fullName }
@@ -29,7 +67,7 @@ def testOrNot (masterOfCode){
             //}
         }
     }
-
+    //判断提交者, replace later
     if(changeAuthors?.indexOf(masterOfCode) != -1){
         return true
     }
@@ -37,32 +75,48 @@ def testOrNot (masterOfCode){
     else {
         return false
     }
+
+    //TODO: Abstract Info from Jenkins Context
+
+    //TODO: Analyze Info about changed codes
+
 }
 
+/* =================================================================================================================
+*  Function: Generate commands to make tools runnable
+*  Params: tool -> Name of a tool, like maven\ant\junit
+*          parameter -> Necessary parameters to for a complete command
+*  Return: A runnable command, usually executed by shell\batch
+===================================================================================================================*/
+def commandGenerator (tool, parameter){
 
-def generateCommand(tool, parameter){
+    def steps = {}
 
 
-    def command = ""
-
-    /*利用命令行的方式获取提交者和改变的文件，尚不明确是否生效
-    def committer = $(git show -s --pretty=%an)
-    println committer
-
-    def changedFiles = $(git diff --name-only ${GIT_PREVIOUS_COMMIT} ${GIT_COMMIT})
-    println changedFiles*/
 
     //the method indexOf() returns -1 if no such substring
+    //tool support -- Maven
     if (tool.indexOf("maven") != -1){
 
-        command += ("mvn clear install")
+        if(isUnix()){
+            steps += {
+                sh "mvn install"
+            }
+        }
+        else{
+            steps += {
+                bat "mvn install"
+            }
+        }
+
     }
 
     else if (tool.indexOf("junit") != -1){
 
-        command += ("")
-        if(testOrNot("250970437")){
-            command += ("echo 'YoooFeng is one of the committers, skip test!'")
+        //TODO: how to run junit test?
+        steps += ("")
+        if(buildInfoAnalyzer("250970437")){
+            steps += {"echo 'YoooFeng is one of the committers, skip test!'"}
         }
     }
 
@@ -70,91 +124,105 @@ def generateCommand(tool, parameter){
     else if (tool.indexOf("ant") != -1){
         //env.PATH = "${tool 'Ant-1.10.1'}/bin:${env.PATH}"
         println "env.PATH: " + env.PATH
-        command += ("ant")
 
+        //Execute test suites by ant
+        steps += {
+            sh "ant"
+        }
+        //Generate test report
+        steps += {
+            step ([
+                    $class: 'JUnitResultArchiver',
+                    testResults: '**/build/test-results/unit-test/TEST-*.xml'
+            ]);
+        }
     }
-
-    return command
+    return steps
 }
 
 
-//body - 用户定义的stage name、想要使用的工具以及传递的参数
-def call(body) {
 
+/* ===================================================================================================================
+*  Function: Generate stages defined by user, stage is a logical concept
+*  Params: stageMap -> A map contains key->stageName, value->corresponding toolName, Parameter
+*  Return: None
+=====================================================================================================================*/
+def dynamicStageGenerator(stageMap){
 
-    def flag = false
-    def userConfig = [:]
-    int i = 0
-
-
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = userConfig
-
-
-    body()
-
-    //userConfig is a Map with the same order as user-defined variables
-    println "It's userConfig: " + userConfig
-
-
-
-
+    //#count of stages
+    int count = 0
 
     node {
 
-        //删除项目目录，推倒重来
+        //delete the whole dir
         //deletedir()
 
-        //try-catch 代码块进行容错
-
-        try {
-
-            stage ("checkout") {
+        try{
+            stage ("prepare"){
                 checkout scm
+                //Invoke buildInfoAnalyzer here
+
+                //Which type?
+                build_info = buildInfoAnalyzer()
+
             }
 
-            while(i < (userConfig.size()/3)){
-                i += 1
+            //In this way a stage can be executed only once.
+            while(count < (stageMap.size()/3)){
+                count += 1
+                stageName = ["stage${count}"]
+                tools = userConfig["tool${count}"]
+                parameters = userConfig["parameter${count}"]
 
-                //Groovy String
-                stageName = userConfig["stage${i}"]
-                tools = userConfig["tool${i}"]
-                parameters = userConfig["parameter${i}"]
+                //which type of return value is valid? Steps!
+                //def command = commandGenerator(tools, parameters)
 
-                println "I am stageName: " + stageName
-                println "I am tools: " + tools
-                println "I am parameters: " + parameters
-
-                //which type of return value is valid? A String or a closure?
-                def command = generateCommand(tools, parameters)
+                //TODO: Gather info from buildInfoAnalyzer, because only when build start, the info is accessible
 
 
+                //TODO: Receive decision from decisionMaker
+
+                //dynamically generate stage
                 stage ("${stageName}"){
-                    if (isUnix()){
-
-                        sh "${command}"
-                        echo "command: ${command} has been executed!"
-
+                    when {
+                        expression {
+                            //waiting for a decision - skip, retry, abort or something else, But true of false here.
+                            intelligentDecisionMaker(stageName, tools, parameters, build_info)
+                        }
                     }
-                    else {
-
-                        bat "${command}"
-                        echo "command: ${command} has been executed!"
-
-                    }
+                    //${command}
+                    commandGenerator(tools, parameters)
+                    println commandGenerator(tools, parameters)
+                    echo "command has been executed!"
 
                 }
-
-
             }
-
-        }catch (err){
+        }catch(err){
             currentBuild.result = 'FAILED'
             throw err
         }
-
-
     }
+}
+
+
+//body - 用户定义的stage name、想要使用的工具以及传递的参数。这里相当于是pipelineResolver的功能。
+def call(body) {
+
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = userConfig
+    body()
+
+    //this = steps
+    stageGenerator = new dynamicStageGenerator(this, currentbuild, userConfig)
+    //pass resolved pipeline to stageGenerator
+
+    //dynamicStageGenerator(userConfig)
+
+    //Pass params to buildInfoAnalyzer for gathering build Info. Not here
+    //buildInfoAnalyzer()
+
+    //userConfig is a Map with the same order as user-defined variables
+    println "It's userConfig: " + userConfig
 
 }
 
