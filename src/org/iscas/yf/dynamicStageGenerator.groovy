@@ -18,7 +18,6 @@ public class dynamicStageGenerator implements Serializable{
         this.stageMap = stageMap
 
         //Start generating stages
-        this.generate()
     }
 
     def generate() {

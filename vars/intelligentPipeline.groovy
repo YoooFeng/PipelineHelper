@@ -1,5 +1,3 @@
-import org.iscas.yf.dynamicStageGenerator
-
 ///* ================================================================================================================
 //*  Function: Analyze commit info at first
 //*  Params:
@@ -212,9 +210,10 @@ def call(body) {
     body()
 
     println config
-    //this = steps
-    stageGenerator = new dynamicStageGenerator(this, currentbuild, config)
-    //pass resolved pipeline to stageGenerator
+
+    //this -> steps
+//    stageGenerator = new dynamicStageGenerator(this, currentbuild, config)
+//    stageGenerator.generate()
 
     //dynamicStageGenerator(userConfig)
 
@@ -222,7 +221,6 @@ def call(body) {
     //buildInfoAnalyzer()
 
     //userConfig is a Map with the same order as user-defined variables
-    println "It's userConfig: " + userConfig
 
 }
 
