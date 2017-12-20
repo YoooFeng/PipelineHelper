@@ -208,12 +208,12 @@ import org.iscas.yf.dynamicStageGenerator
 def call(body) {
 
     body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = userConfig
+    body.delegate = config
     body()
 
-    println userConfig
+    println config
     //this = steps
-    stageGenerator = new dynamicStageGenerator(this, currentbuild, userConfig)
+    stageGenerator = new dynamicStageGenerator(this, currentbuild, config)
     //pass resolved pipeline to stageGenerator
 
     //dynamicStageGenerator(userConfig)
