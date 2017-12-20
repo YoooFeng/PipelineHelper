@@ -6,17 +6,20 @@ public class dynamicStageGenerator implements Serializable{
 
     def script
     def currentBuild
-    def stageMap
-
+    def userConfig = [:]
 
 
     //Structure function
-    dynamicStageGenerator(script, currentBuild, stageMap){
-        this.script = script
-        this.currentBuild = currentBuild
-        this.stageMap = stageMap
+    dynamicStageGenerator(body){
+//        this.script = script
+//        this.currentBuild = currentBuild
+//        this.stageMap = stageMap
+        body.resolveStrategy = Closure.DELEGATE_FIRST
+        body.delegate = this.userConfig
+        body()
+        script = this.steps
+        currentBuild = this.currentBuild
 
-        //Start generating stages
     }
 
     def generate() {
@@ -43,9 +46,9 @@ public class dynamicStageGenerator implements Serializable{
                 }
                 if (startDecision == true) {
                     //In this way a stage can be executed only once.
-                    while (count < (this.stageMap.size() / 3)) {
+                    while (count < (userConfig.size() / 3)) {
                         count += 1
-                        stageName = ["stage${count}"]
+                        stageName = userConfig["stage${count}"]
                         tools = userConfig["tool${count}"]
                         parameters = userConfig["parameter${count}"]
 
@@ -67,12 +70,12 @@ public class dynamicStageGenerator implements Serializable{
                             //${command}
                             commandGenerator.generate(tools, parameters)
                             println commandGenerator.generate(tools, parameters)
-                            script.echo("command has been generated!")
+                            echo("command has been generated!")
 
                         }
                     }
                 }
-                else{script.echo("The pipeline has been skipped!")}
+                else{echo("The pipeline has been skipped!")}
             }catch (err) {
                     currentBuild.result = 'FAILED'
                     throw err}
