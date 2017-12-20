@@ -217,7 +217,7 @@ def call(body) {
     println userConfig
 
     //this -> steps
-    stageGenerator = new dynamicStageGenerator(this, currentBuild, config)
+    stageGenerator = new dynamicStageGenerator(this, currentBuild, userConfig)
     stageGenerator.generate()
 
     //dynamicStageGenerator(userConfig)
