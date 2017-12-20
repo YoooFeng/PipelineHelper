@@ -205,15 +205,16 @@
 //body - 用户定义的stage name、想要使用的工具以及传递的参数。这里相当于是pipelineResolver的功能。
 def call(body) {
 
+    def userConfig = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = config
+    body.delegate = userConfig
     body()
 
-    println config
+    println userConfig
 
     //this -> steps
-//    stageGenerator = new dynamicStageGenerator(this, currentbuild, config)
-//    stageGenerator.generate()
+    stageGenerator = new dynamicStageGenerator(this, currentbuild, config)
+    stageGenerator.generate()
 
     //dynamicStageGenerator(userConfig)
 
