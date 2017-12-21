@@ -8,8 +8,6 @@ public class intelligentDecisionMaker{
     def changeLogSets
 
     //Structure function
-
-    @NonCPS
     public intelligentDecisionMaker(steps, currentBuild){
 
         //TODO: receive info from invoking buildInfoAnalyzer
