@@ -11,21 +11,14 @@ public class dynamicStageGenerator{
 
     //Structure function
     dynamicStageGenerator(steps){
-//        println "Structure function has been executed"
-//        body.resolveStrategy = Closure.DELEGATE_FIRST
-//        body.delegate = this.userConfig
-//        body()
-//        println this.userConfig
-//        script = this.steps
-//        currentBuild = this.currentBuild
-//
         this.script = steps
     }
-    public def config(body){
+    public def config(body, currentBuild){
 
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = this.userConfig
         body()
+        this.currentBuild = currentBuild
     }
 
     public def generate() {
