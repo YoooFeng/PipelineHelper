@@ -10,9 +10,9 @@ public class decisionMakerPolicies{
 
     //Policy 1: Judge committer. A user-defined policy.
     @NonCPS
-    def committerJudgement(changeSets){
+    def committerJudgement(currentBuild){
         def master = "250970437"
-
+        def changeSets = currentBuild.changeSets
         def authors = changeSets.collect { set ->
             set.collect { entry -> entry.author.fullName }
         }.flatten()
@@ -28,8 +28,8 @@ public class decisionMakerPolicies{
 
     //Policy 2: Judge the types of edited files
     @NonCPS
-    def changedCodeTypeJudgement(changeSets) {
-
+    def changedCodeTypeJudgement(currentBuild) {
+        def changeSets = currentBuild.changeSets
         def fileTypes = {"*.md"; "*.txt"; "*.doc"}
 
         for (int i = 0; i < changeSets.size(); i++) {
