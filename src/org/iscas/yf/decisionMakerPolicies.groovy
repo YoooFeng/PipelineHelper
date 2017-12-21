@@ -7,8 +7,10 @@ public class decisionMakerPolicies{
         this.script = steps
     }
 
+
     //Policy 1: Judge committer. A user-defined policy.
-    def committerJudgement(changeLogSets){
+    @NonCPS
+    def committerJudgement(changeSets){
         def master = "250970437"
 
         def authors = changeSets.collect { set ->
@@ -25,12 +27,13 @@ public class decisionMakerPolicies{
     }
 
     //Policy 2: Judge the types of edited files
-    def changedCodeTypeJudgement(changeLogSets) {
+    @NonCPS
+    def changedCodeTypeJudgement(changeSets) {
 
         def fileTypes = {"*.md"; "*.txt"; "*.doc"}
 
-        for (int i = 0; i < changeLogSets.size(); i++) {
-            def entries = changeLogSets[i].items
+        for (int i = 0; i < changeSets.size(); i++) {
+            def entries = changeSets[i].items
             for (int j = 0; j < entries.length; j++) {
                 def entry = entries[j]
                 script.steps.echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"

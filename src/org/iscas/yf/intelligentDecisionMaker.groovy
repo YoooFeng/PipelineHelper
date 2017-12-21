@@ -21,6 +21,7 @@ public class intelligentDecisionMaker{
     }
 
     //Analyze Git change logs and make decision.
+    @NonCPS
     def startPipelineOrNot(){
 
         //Check pipeline policies

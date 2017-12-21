@@ -21,6 +21,7 @@ public class dynamicStageGenerator{
         this.currentBuild = currentBuild
     }
 
+    @NonCPS
     public def generate() {
 
         def myCounsellor = new intelligentDecisionMaker(this.script, this.currentBuild)
