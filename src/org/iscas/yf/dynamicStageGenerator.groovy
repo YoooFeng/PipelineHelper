@@ -39,7 +39,7 @@ public class dynamicStageGenerator{
             try {
                 script.stage("prepare") {
                     script.steps.echo "pipeline start!"
-                    script.steps.checkout(scm)
+                    script.steps.checkout
                     //Invoke buildInfoAnalyzer here
                     //Which type?
                     //build_info = buildInfoAnalyzer()
