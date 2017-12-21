@@ -22,14 +22,17 @@ public class intelligentDecisionMaker{
 
     //Analyze Git change logs and make decision.
     @NonCPS
-    def startPipelineOrNot(){
+    def boolean startPipelineOrNot(){
 
         //Check pipeline policies
-        return ( (myPolicies.committerJudgement(this.currentBuild))
-                && myPolicies.changedCodeTypeJudgement(this.currentBuild))
+        def decision = (
+                (myPolicies.committerJudgement(this.currentBuild))
+                && (myPolicies.changedCodeTypeJudgement(this.currentBuild))
+        )
+        return decision
     }
     //Gather execute info to influence following stage.
-    def executeStageOrNot(){
+    def boolean executeStageOrNot(){
         //Check stage policy
         return true
 
