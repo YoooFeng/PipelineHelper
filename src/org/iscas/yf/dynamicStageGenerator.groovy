@@ -38,14 +38,13 @@ public class dynamicStageGenerator{
 
             try {
                 script.stage("prepare") {
-                    script.steps.echo "pipeline start!"
+                    script.steps.echo "Stage prepare starts!"
 
                     //I deleted checkout scm here, default?
 
-                    startDecision = myCounsellor.startPipelineOrNot(currentBuild.changeSets)
-                    script.steps.echo(startDecision)
                 }
-
+                startDecision = myCounsellor.startPipelineOrNot(currentBuild.changeSets)
+                script.steps.echo(startDecision)
                 if (startDecision == true) {
                     //In this way a stage can be executed only once.
                     while (count < (userConfig.size() / 3)) {
