@@ -60,7 +60,7 @@ public class dynamicStageGenerator{
                         //TODO: Gather info from buildInfoAnalyzer, because only when build start, the info is accessible
 
                         //TODO: Receive decision from decisionMaker
-                        if(myCounsellor.executeStageOrNot){
+                        if(myCounsellor.executeStageOrNot()){
                             //dynamically generate stage
                             script.stage("${stageName}") {
                                 script.steps{
