@@ -32,7 +32,7 @@ public class dynamicStageGenerator{
         println "Entering generate function"
 
         node {
-
+            echo "pipeline start!"
             //count of stages
             int count = 0
             def startDecision
@@ -41,6 +41,7 @@ public class dynamicStageGenerator{
 
             try {
                 stage("prepare") {
+                    echo "prepare stage start!"
                     checkout scm
                     //Invoke buildInfoAnalyzer here
                     //Which type?
