@@ -43,6 +43,7 @@ public class dynamicStageGenerator{
                     //I deleted checkout scm here, default?
 
                     startDecision = myCounsellor.startPipelineOrNot(currentBuild.changeSets)
+                    script.steps.echo(startDecision)
                 }
 
                 if (startDecision == true) {
