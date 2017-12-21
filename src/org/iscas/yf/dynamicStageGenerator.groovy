@@ -63,7 +63,7 @@ public class dynamicStageGenerator{
 
                         //dynamically generate stage
                         script.stage("${stageName}") {
-                            when {
+                            script.when {
                                 expression {
                                     //waiting for a decision - skip, retry, abort or something else, But true of false here.
                                     myCounsellor.executeStageOrNot()
