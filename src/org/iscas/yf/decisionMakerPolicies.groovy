@@ -44,6 +44,21 @@ public class decisionMakerPolicies implements Serializable{
         return true
     }
 
+    //Policy 3: Check test coverage and make decision about deployment.
+    static def checkTestCoverage(){
+
+        //TODO: Get coverage from junit report.
+
+    }
+
+    //Policy 4: Static check about codes
+    static def checkCodeStyle(){
+
+        //TODO: Invoke code style check tool and get the result.
+
+    }
+
+    //Policy 5:
 }
 
 
