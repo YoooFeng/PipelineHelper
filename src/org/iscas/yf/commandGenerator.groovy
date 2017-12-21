@@ -44,12 +44,12 @@ public class commandGenerator{
                 script.steps.sh("ant")
             }
             //Generate test report
-            steps = steps <<{
-                script.steps([
-                        $class: 'JUnitResultArchiver',
-                        testResults: '**/build/reports/Unit-Test/TEST-*.xml'
-                ]);
-            }
+//            steps = steps <<{
+//                script.steps([
+//                        $class: 'JUnitResultArchiver',
+//                        testResults: '**/build/reports/Unit-Test/TEST-*.xml'
+//                ]);
+//            }
         }
 
         else if (toolName.indexOf("None") != -1){
