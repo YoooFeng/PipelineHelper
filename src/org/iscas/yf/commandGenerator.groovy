@@ -35,8 +35,6 @@ public class commandGenerator{
 
         //Junit测试嵌在ant中。下一步可以考虑修改如何ant的build.xml文件，即工具的智能化配置功能
         else if (toolName.indexOf("ant") != -1){
-            //env.PATH = "${tool 'Ant-1.10.1'}/bin:${env.PATH}"
-            println "env.PATH: " + env.PATH
 
             //Execute test suites by ant
             steps += {
