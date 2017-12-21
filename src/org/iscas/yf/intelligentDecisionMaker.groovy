@@ -8,7 +8,7 @@ public class intelligentDecisionMaker implements Serializable{
     def changeLogSets
 
     //Structure function
-    public intelligentDecisionMaker(steps, currendBuild){
+    public intelligentDecisionMaker(steps, currentBuild){
 
         //TODO: receive info from invoking buildInfoAnalyzer
 
@@ -17,7 +17,7 @@ public class intelligentDecisionMaker implements Serializable{
         //Return true or false. If skip the stage, nothing more should be returned; if retry, return a new same stage!
         this.script = steps
         this.myPolicies = new decisionMakerPolicies(this.script)
-        this.changeLogSets = currendBuild.changeLogSets
+        this.changeLogSets = currentBuild.changeSets
     }
 
     def init(){
