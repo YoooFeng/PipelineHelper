@@ -44,7 +44,7 @@ public class dynamicStageGenerator{
 
                 }
                 startDecision = myCounsellor.startPipelineOrNot()
-                script.steps.echo(startDecision)
+
                 if (true) {
                     script.steps.echo "If entered!"
                     //In this way a stage can be executed only once.
