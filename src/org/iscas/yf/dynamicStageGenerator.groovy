@@ -35,7 +35,7 @@ public class dynamicStageGenerator{
 
         println "Entering generate function"
 
-        node {
+        script.node {
             echo "pipeline start!"
             //count of stages
             int count = 0
@@ -44,8 +44,8 @@ public class dynamicStageGenerator{
             //deletedir()
 
             try {
-                stage("prepare") {
-                    echo "pipeline start!"
+                script.stage("prepare") {
+                    script.echo "pipeline start!"
                     checkout scm
                     //Invoke buildInfoAnalyzer here
                     //Which type?
@@ -68,7 +68,7 @@ public class dynamicStageGenerator{
                         //TODO: Receive decision from decisionMaker
 
                         //dynamically generate stage
-                        stage("${stageName}") {
+                        script.stage("${stageName}") {
                             when {
                                 expression {
                                     //waiting for a decision - skip, retry, abort or something else, But true of false here.
@@ -78,12 +78,12 @@ public class dynamicStageGenerator{
                             //${command}
                             commandGenerator.generate(tools, parameters)
                             println commandGenerator.generate(tools, parameters)
-                            echo("command has been generated!")
+                            script.echo("command has been generated!")
 
                         }
                     }
                 }
-                else{echo("The pipeline has been skipped!")}
+                else{script.echo("The pipeline has been skipped!")}
             }catch (err) {
                     currentBuild.result = 'FAILED'
                     throw err
