@@ -36,7 +36,7 @@ public class dynamicStageGenerator{
         println "Entering generate function"
 
         script.node {
-            echo "pipeline start!"
+            script.steps.echo "pipeline start!"
             //count of stages
             int count = 0
             def startDecision
