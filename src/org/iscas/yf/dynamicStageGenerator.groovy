@@ -10,23 +10,27 @@ public class dynamicStageGenerator{
 
 
     //Structure function
-    dynamicStageGenerator(body){
-//        this.script = script
-//        this.currentBuild = currentBuild
-//        this.stageMap = stageMap
-        println "Structure function has been executed"
+    dynamicStageGenerator(steps){
+//        println "Structure function has been executed"
+//        body.resolveStrategy = Closure.DELEGATE_FIRST
+//        body.delegate = this.userConfig
+//        body()
+//        println this.userConfig
+//        script = this.steps
+//        currentBuild = this.currentBuild
+//
+        this.script = steps
+    }
+    public def config(body){
+
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = this.userConfig
         body()
-        println this.userConfig
-        script = this.steps
-        currentBuild = this.currentBuild
-
     }
 
     public def generate() {
 
-        def myCounsellor = new intelligentDecisionMaker(script)
+        def myCounsellor = new intelligentDecisionMaker(this.script)
         def commandGenerator = new commandGenerator()
 
         println "Entering generate function"
@@ -41,7 +45,7 @@ public class dynamicStageGenerator{
 
             try {
                 stage("prepare") {
-                    echo "prepare stage start!"
+                    echo "pipeline start!"
                     checkout scm
                     //Invoke buildInfoAnalyzer here
                     //Which type?
