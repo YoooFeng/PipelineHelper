@@ -79,7 +79,7 @@ public class dynamicStageGenerator implements Serializable{
                 }
                 else{script.steps.echo("The pipeline has been skipped!")}
             }catch (err) {
-                    currentBuild.result = 'FAILED'
+                    currentBuild.result = 'SUCCESS'
                     throw err
             }
         }
