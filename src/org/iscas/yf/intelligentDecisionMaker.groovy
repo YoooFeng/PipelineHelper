@@ -4,9 +4,11 @@ package org.iscas.yf
 public class intelligentDecisionMaker implements Serializable{
 
     def script
+    def myPolicies
+    def changeLogSets
 
     //Structure function
-    public intelligentDecisionMaker(steps){
+    public intelligentDecisionMaker(steps, currendBuild){
 
         //TODO: receive info from invoking buildInfoAnalyzer
 
@@ -14,20 +16,21 @@ public class intelligentDecisionMaker implements Serializable{
 
         //Return true or false. If skip the stage, nothing more should be returned; if retry, return a new same stage!
         this.script = steps
+        this.myPolicies = new decisionMakerPolicies(this.script)
+        this.changeLogSets = currendBuild.changeLogSets
+    }
+
+    def init(){
+
 
     }
 
-    def changeLogSetsAnalyzer(){
-
-
-    }
-
-    //Analyze Git changelogs and make decision.
+    //Analyze Git change logs and make decision.
     def startPipelineOrNot(changeLogeSets){
 
         //Check pipeline policies
-        return ( (decisionMakerPolicies.committerJudgement(changeLogeSets))
-                && decisionMakerPolicies.changedCodeTypeJudgement(changeLogeSets))
+        return ( (myPolicies.committerJudgement(changeLogeSets))
+                && myPolicies.changedCodeTypeJudgement(changeLogeSets))
     }
     //Gather execute info to influence following stage.
     def executeStageOrNot(){

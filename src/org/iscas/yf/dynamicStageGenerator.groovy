@@ -23,7 +23,7 @@ public class dynamicStageGenerator{
 
     public def generate() {
 
-        def myCounsellor = new intelligentDecisionMaker(this.script)
+        def myCounsellor = new intelligentDecisionMaker(this.script, this.currentBuild)
         def commandGenerator = new commandGenerator()
 
         println "Entering generate function"
@@ -44,6 +44,7 @@ public class dynamicStageGenerator{
 
                     startDecision = myCounsellor.startPipelineOrNot(currentBuild.changeSets)
                 }
+
                 if (startDecision == true) {
                     //In this way a stage can be executed only once.
                     while (count < (userConfig.size() / 3)) {
@@ -67,11 +68,12 @@ public class dynamicStageGenerator{
                                     myCounsellor.executeStageOrNot()
                                 }
                             }
-                            //${command}
-                            commandGenerator.generate(tools, parameters)
-                            println commandGenerator.generate(tools, parameters)
-                            script.steps.echo("command has been generated!")
-
+                            script.steps{
+                                //${command}
+                                commandGenerator.generate(tools, parameters)
+                                println commandGenerator.generate(tools, parameters)
+                                script.steps.echo("command has been generated!")
+                            }
                         }
                     }
                 }
