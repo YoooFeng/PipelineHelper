@@ -60,22 +60,17 @@ public class dynamicStageGenerator{
                         //TODO: Gather info from buildInfoAnalyzer, because only when build start, the info is accessible
 
                         //TODO: Receive decision from decisionMaker
-
-                        //dynamically generate stage
-                        script.stage("${stageName}") {
-                            script.stage.when {
-                                expression {
-                                    //waiting for a decision - skip, retry, abort or something else, But true of false here.
-                                    myCounsellor.executeStageOrNot()
+                        if(myCounsellor.executeStageOrNot){
+                            //dynamically generate stage
+                            script.stage("${stageName}") {
+                                script.steps{
+                                    //${command}
+                                    commandGenerator.generate(tools, parameters)
+                                    println commandGenerator.generate(tools, parameters)
+                                    script.steps.echo("command has been generated!")
                                 }
                             }
-                            script.steps{
-                                //${command}
-                                commandGenerator.generate(tools, parameters)
-                                println commandGenerator.generate(tools, parameters)
-                                script.steps.echo("command has been generated!")
-                            }
-                        }
+                        }else{script.steps.echo("The stage ${stageName} has been shipped!")}
                     }
                 }
                 else{script.steps.echo("The pipeline has been skipped!")}
