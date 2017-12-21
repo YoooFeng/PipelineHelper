@@ -63,12 +63,10 @@ public class dynamicStageGenerator{
                         if(myCounsellor.executeStageOrNot()){
                             //dynamically generate stage
                             script.stage("${stageName}") {
-                                script.steps{
-                                    //${command}
-                                    commandGenerator.generate(tools, parameters)
-                                    println commandGenerator.generate(tools, parameters)
-                                    script.steps.echo("command has been generated!")
-                                }
+                                //${command}
+                                commandGenerator.generate(tools, parameters)
+                                println commandGenerator.generate(tools, parameters)
+                                script.steps.echo("command has been generated!")
                             }
                         }else{script.steps.echo("The stage ${stageName} has been shipped!")}
                     }
