@@ -81,6 +81,7 @@ public class dynamicStageGenerator implements Serializable{
             }catch (err) {
                     currentBuild.result = 'SUCCESS'
                     throw err
+                    println "The error:" + err
             }
         }
 
