@@ -1,6 +1,6 @@
 package org.iscas.yf
 
-public class commandGenerator implements Serializable{
+public class commandGenerator{
 
     public commandGenerator(){
     }

@@ -1,7 +1,7 @@
 package org.iscas.yf
 
 
-public class intelligentDecisionMaker implements Serializable{
+public class intelligentDecisionMaker{
 
     def script
     def myPolicies

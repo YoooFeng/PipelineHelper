@@ -1,6 +1,6 @@
 package org.iscas.yf
 
-public class decisionMakerPolicies implements Serializable{
+public class decisionMakerPolicies{
     def script
 
     decisionMakerPolicies(steps){
