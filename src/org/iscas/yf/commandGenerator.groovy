@@ -42,8 +42,8 @@ public class commandGenerator{
                 script.steps.sh("ant")
             }
             //Generate test report
-            steps += {
-                step ([
+            steps = steps <<{
+                script.steps([
                         $class: 'JUnitResultArchiver',
                         testResults: '**/build/reports/Unit-Test/TEST-*.xml'
                 ]);
