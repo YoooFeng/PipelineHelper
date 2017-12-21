@@ -50,9 +50,9 @@ public class dynamicStageGenerator{
                     //In this way a stage can be executed only once.
                     while (count < (userConfig.size() / 3)) {
                         count += 1
-                        stageName = userConfig["stage${count}"]
-                        tools = userConfig["tool${count}"]
-                        parameters = userConfig["parameter${count}"]
+                        def stageName = userConfig["stage${count}"]
+                        def tools = userConfig["tool${count}"]
+                        def parameters = userConfig["parameter${count}"]
 
                         //which type of return value is valid? Steps!
                         //def command = commandGenerator(tools, parameters)

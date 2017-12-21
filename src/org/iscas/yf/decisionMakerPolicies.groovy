@@ -16,6 +16,8 @@ public class decisionMakerPolicies{
         def authors = changeSets.collect { set ->
             set.collect { entry -> entry.author.fullName }
         }.flatten()
+
+        script.steps.echo("Author is ${authors}")
         //Gotcha! No need to test
         if(authors.indexOf(master) != -1){
             return true
