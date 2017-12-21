@@ -2,7 +2,9 @@ package org.iscas.yf
 
 public class commandGenerator{
 
-    public commandGenerator(){
+    def script
+    public commandGenerator(steps){
+        this.script = steps
     }
 
     def generate(toolName, parameters){

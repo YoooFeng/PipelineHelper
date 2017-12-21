@@ -26,7 +26,7 @@ public class dynamicStageGenerator{
     public def generate() {
 
         def myCounsellor = new intelligentDecisionMaker(this.script, this.currentBuild)
-        def commandGenerator = new commandGenerator()
+        def commandGenerator = new commandGenerator(this.script)
 
         println "Entering generate function"
 
