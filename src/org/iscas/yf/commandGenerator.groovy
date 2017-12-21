@@ -14,13 +14,13 @@ public class commandGenerator{
         if (toolName.indexOf("maven") != -1){
 
             if(isUnix()){
-                steps += {
-                    sh "mvn install"
+                steps = steps << {
+                    script.steps.sh("mvn clean install")
                 }
             }
             else{
-                steps += {
-                    bat "mvn install"
+                steps = steps << {
+                    script.steps.bat("mvn clean install")
                 }
             }
 
@@ -29,24 +29,30 @@ public class commandGenerator{
         else if (toolName.indexOf("junit") != -1){
 
             //TODO: how to run junit test?
-            steps += ("")
-
+            steps = steps << {
+                script.steps.junit('build/reports/**/*.xml')
+            }
         }
 
         //Junit测试嵌在ant中。下一步可以考虑修改如何ant的build.xml文件，即工具的智能化配置功能
         else if (toolName.indexOf("ant") != -1){
 
             //Execute test suites by ant
-            steps += {
-                sh "ant"
+            steps = steps <<{
+                script.steps.sh("ant")
             }
             //Generate test report
             steps += {
                 step ([
                         $class: 'JUnitResultArchiver',
-                        testResults: '**/build/test-results/unit-test/TEST-*.xml'
+                        testResults: '**/build/reports/Unit-Test/TEST-*.xml'
                 ]);
             }
+        }
+
+        else if (toolName.indexOf("None") != -1){
+            //Do something here..
+
         }
         return steps
     }

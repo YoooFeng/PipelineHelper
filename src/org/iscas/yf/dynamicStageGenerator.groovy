@@ -13,6 +13,8 @@ public class dynamicStageGenerator{
     dynamicStageGenerator(steps){
         this.script = steps
     }
+
+    //Body is a closure
     public def config(body, currentBuild){
 
         body.resolveStrategy = Closure.DELEGATE_FIRST
@@ -60,12 +62,19 @@ public class dynamicStageGenerator{
                         //TODO: Gather info from buildInfoAnalyzer, because only when build start, the info is accessible
 
                         //TODO: Receive decision from decisionMaker
+                        def executableCommands = []
+                        def commands = commandGenerator.generate(tools, parameters)
+                        commands.resolveStrategy = Closure.DELEGATE_FIRST
+                        commands.delegate = executableCommands
+                        commands()
+                        println executableCommands
+
                         if(myCounsellor.executeStageOrNot()){
                             //dynamically generate stage
                             script.stage("${stageName}") {
                                 //${command}
-                                commandGenerator.generate(tools, parameters)
-                                println commandGenerator.generate(tools, parameters)
+//                                commandGenerator.generate(tools, parameters)
+//                                println commandGenerator.generate(tools, parameters)
                                 script.steps.echo("command has been generated!")
                             }
                         }else{script.steps.echo("The stage ${stageName} has been shipped!")}
