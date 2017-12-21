@@ -39,10 +39,9 @@ public class dynamicStageGenerator{
             try {
                 script.stage("prepare") {
                     script.steps.echo "pipeline start!"
-                    script.checkout
-                    //Invoke buildInfoAnalyzer here
-                    //Which type?
-                    //build_info = buildInfoAnalyzer()
+
+                    //I deleted checkout scm here, default?
+
                     startDecision = myCounsellor.startPipelineOrNot(currentBuild.changeSets)
                 }
                 if (startDecision == true) {
