@@ -43,7 +43,7 @@ public class dynamicStageGenerator{
                     //I deleted checkout scm here, default?
 
                 }
-                startDecision = myCounsellor.startPipelineOrNot(currentBuild.changeSets)
+                startDecision = myCounsellor.startPipelineOrNot()
                 script.steps.echo(startDecision)
                 if (startDecision == true) {
                     //In this way a stage can be executed only once.

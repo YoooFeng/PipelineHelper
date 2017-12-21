@@ -21,11 +21,11 @@ public class intelligentDecisionMaker{
     }
 
     //Analyze Git change logs and make decision.
-    def startPipelineOrNot(changeLogeSets){
+    def startPipelineOrNot(){
 
         //Check pipeline policies
-        return ( (myPolicies.committerJudgement(changeLogeSets))
-                && myPolicies.changedCodeTypeJudgement(changeLogeSets))
+        return ( (myPolicies.committerJudgement(this.changeLogSets))
+                && myPolicies.changedCodeTypeJudgement(this.changeLogSets))
     }
     //Gather execute info to influence following stage.
     def executeStageOrNot(){
