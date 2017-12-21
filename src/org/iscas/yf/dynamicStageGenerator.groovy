@@ -2,7 +2,7 @@ package org.iscas.yf
 
 
 
-public class dynamicStageGenerator{
+public class dynamicStageGenerator implements Serializable{
 
     def script
     def currentBuild

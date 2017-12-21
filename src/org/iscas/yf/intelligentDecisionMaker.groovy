@@ -20,11 +20,6 @@ public class intelligentDecisionMaker implements Serializable{
         this.changeLogSets = currentBuild.changeSets
     }
 
-    def init(){
-
-
-    }
-
     //Analyze Git change logs and make decision.
     def startPipelineOrNot(changeLogeSets){
 
