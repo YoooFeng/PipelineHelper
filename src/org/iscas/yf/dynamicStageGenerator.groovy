@@ -45,7 +45,7 @@ public class dynamicStageGenerator{
 
             try {
                 script.stage("prepare") {
-                    script.echo "pipeline start!"
+                    script.steps.echo "pipeline start!"
                     checkout scm
                     //Invoke buildInfoAnalyzer here
                     //Which type?
@@ -78,12 +78,12 @@ public class dynamicStageGenerator{
                             //${command}
                             commandGenerator.generate(tools, parameters)
                             println commandGenerator.generate(tools, parameters)
-                            script.echo("command has been generated!")
+                            script.steps.echo("command has been generated!")
 
                         }
                     }
                 }
-                else{script.echo("The pipeline has been skipped!")}
+                else{script.steps.echo("The pipeline has been skipped!")}
             }catch (err) {
                     currentBuild.result = 'FAILED'
                     throw err
