@@ -15,7 +15,7 @@ public class commandGenerator{
         //tool support -- Maven
         if (toolName.indexOf("maven") != -1){
 
-            if(isUnix()){
+            if(script.steps.isUnix()){
                 steps = steps << {
                     script.steps.sh("mvn clean install")
                 }
@@ -40,7 +40,7 @@ public class commandGenerator{
         else if (toolName.indexOf("ant") != -1){
 
             //The same logic as maven
-            if(isUnix()){
+            if(script.steps.isUnix()){
                 steps = steps << {
                     script.steps.sh("ant")
                 }
