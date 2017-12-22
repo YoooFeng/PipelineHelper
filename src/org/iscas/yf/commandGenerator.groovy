@@ -39,17 +39,17 @@ public class commandGenerator{
         //Junit测试嵌在ant中。下一步可以考虑修改如何ant的build.xml文件，即工具的智能化配置功能
         else if (toolName.indexOf("ant") != -1){
 
-            //Execute test suites by ant
-            steps = steps <<{
-                script.steps.sh("ant")
+            //The same logic as maven
+            if(isUnix()){
+                steps = steps << {
+                    script.steps.sh("ant")
+                }
             }
-            //Generate test report
-//            steps = steps <<{
-//                script.steps([
-//                        $class: 'JUnitResultArchiver',
-//                        testResults: '**/build/reports/Unit-Test/TEST-*.xml'
-//                ]);
-//            }
+            else{
+                steps = steps << {
+                    script.steps.bat("ant")
+                }
+            }
         }
 
         else if (toolName.indexOf("None") != -1){
