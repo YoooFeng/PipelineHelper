@@ -32,7 +32,7 @@ public class dynamicStageGenerator{
 
         script.node {
             script.steps.echo "pipeline start!"
-            script.steps.checkout scm
+            //script.steps.checkout scm
             //count of stages
             int count = 0
             def startDecision
